@@ -28,15 +28,18 @@ Welcome to Word Ladder, in this game you are tasked to change a word into anothe
 - Untuk menjalankan program ini, pengguna diharapkan sudah menginstall Java ke dalam perangkat yang akan digunakan.
 
 ## Usage
-1. Pastikan pengguna sudah menginstall semua setup agar program bisa berjalan
+1. Pastikan pengguna sudah menginstall java agar program bisa berjalan
 2. Masuk ke dalam folder src
 3. Buka terminal
 4. Ketik command berikut ke dalam terminal:
 ```
-python main.py
+javac main.java
 ```
-5. Masukkan input sesuai dengan apa yang diminta di terminal
+5. Setelah itu ketik command ini:
+```
+java main
+```
 6. _Then prepare to be Amazed_ 😎
 
 ## Creator
-Created by [@Axel](https://github.com/AxelSantadi)
+Created by [@Axel](https://github.com/AxelSantadi) (Husband of Hoshimachi Suisei)
