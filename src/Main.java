@@ -16,37 +16,29 @@ public class Main {
         }
         return wordList;
     }
+
     public static void main(String[] args) {
-        String startWord;
-        String endWord;
-        Set<String> wordList = readWordListFromFile("C:\\Users\\Axel Santadi\\Documents\\Cool_Yeah\\Tingkat_2\\Semester_4\\StiMa\\Tucil\\03\\Tucil3_13522155\\src\\Library\\words_alpha.txt");
-
-        // Memasukkan input untuk startWord dan endWord
         Scanner input = new Scanner(System.in);
-        System.out.print("Masukkan startWord (Pastikan besar semua ya :D): ");
+        String startWord, endWord;
+        Set<String> wordList = readWordListFromFile("C:\\Users\\Axel Santadi\\Documents\\Cool_Yeah\\Tingkat_2\\Semester_4\\StiMa\\Tucil\\03\\Tucil3_13522155\\src\\Library\\words_alpha.txt");
+        int choice;
+
+        // Input startWord
+        System.out.print("Masukkan startWord (Pastikan semua huruf besar): ");
         startWord = input.nextLine();
+        while (!isValidWord(startWord) || !wordList.contains(startWord)) {
+            System.out.println("Ups, katamu masih belum valid. Pastikan semua hurufnya adalah huruf besar, dan berbahasa inggris ya :3 Silakan coba lagi.");
+            System.out.print("Masukkan startWord (Pastikan semua huruf besar): ");
+            startWord = input.nextLine();
+        } 
 
-        // checker apakah inputan startWord huruf besar semua
-        for (int i = 0; i < startWord.length(); i++) {
-            if (Character.isLowerCase(startWord.charAt(i))) {
-                System.out.println("Inputan startWord tidak valid.");
-                System.out.print("Masukkan startWord lagi (Pastikan besar semua ya :D): ");
-                startWord = input.nextLine();
-                i = 0;
-            }
-        }
-
-        System.out.print("Masukkan endWord (Pastikan besar semua ya :D): ");
+        // Input endWord
+        System.out.print("Masukkan endWord (Pastikan semua huruf besar): ");
         endWord = input.nextLine();
-
-        // checker apakah inputan endWord huruf besar semua
-        for (int i = 0; i < endWord.length(); i++) {
-            if (Character.isLowerCase(endWord.charAt(i))) {
-                System.out.println("Inputan endWord tidak valid.");
-                System.out.print("Masukkan endWord lagi (Pastikan besar semua ya :D): ");
-                endWord = input.nextLine();
-                i = 0;
-            }
+        while (!isValidWord(endWord) || !wordList.contains(endWord) || startWord.length() != endWord.length()) {
+            System.out.println("Ups, katamu masih belum valid. Pastikan semua hurufnya adalah huruf besar, panjangnya sama dengan kata awal, dan berbahasa inggris ya :3 Silakan coba lagi.");
+            System.out.print("Masukkan endWord (Pastikan semua huruf besar): ");
+            endWord = input.nextLine();
         }
 
         // Memasukkan input untuk algoritma yang dipilih
@@ -54,30 +46,72 @@ public class Main {
         System.out.println("1. Uniform Cost Search");
         System.out.println("2. Greedy Best First Search");
         System.out.println("3. A*");
-        System.out.print("Masukkan pilihan (Pastikan berupa angka ya :D): ");
-        int choice = input.nextInt();
+        System.out.print("Masukkan pilihan (1-3): ");
 
-        while (choice < 1 || choice > 3) {
-            System.out.println("Pilihan tidak valid. Silakan masukkan pilihan yang valid.");
-            System.out.print("Masukkan pilihan: ");
-            choice = input.nextInt();
+        long mulai = System.currentTimeMillis();
+
+        // Input choice
+        while (true) {
+            if (input.hasNextInt()) {
+                choice = input.nextInt();
+                if (choice >= 1 && choice <= 3) {
+                    break;
+                } else {
+                    System.out.println("Pilihan tidak valid. Silakan masukkan pilihan yang valid.");
+                    System.out.print("Masukkan pilihan: ");
+                }
+            } else {
+                System.out.println("Pilihan tidak valid. Silakan masukkan pilihan yang valid.");
+                System.out.print("Masukkan pilihan: ");
+                input.next(); // Clear buffer
+            }
         }
 
-        
-        if (choice == 1) {
-            // Find word ladder using UCS algorithm
-            List<String> ucsLadder = UCS.findWordLadderUCS(startWord, endWord, wordList);
-            System.out.println("UCS Word Ladder: " + ucsLadder);
-        } else if (choice == 2) {
-            // Find word ladder using Greedy Best First Search algorithm
-            List<String> greedyLadder = GBFS.findWordLadderGreedy(startWord, endWord, wordList);
-            System.out.println("Greedy Best First Search Word Ladder: " + greedyLadder);
-        } else {
-            // Find word ladder using A* algorithm
-            List<String> aStarLadder = ABintang.findWordLadderAStar(startWord, endWord, wordList);
-            System.out.println("A* Word Ladder: " + aStarLadder);
+        // Proses pemilihan algoritma
+        switch (choice) {
+            case 1:
+                List<Object> ucsLadder = UCS.findWordLadderUCS(startWord, endWord, wordList);
+                if (((List<?>) ucsLadder.get(0)).isEmpty()) {
+                    System.out.println("Sayang sekali, tidak ditemukan ladder dari " + startWord + " ke " + endWord + " :(. Mungkin salah satu atau kedua kata bukan dalam bahasa inggris ya, who knows? ㄟ( ▔, ▔ )ㄏ");
+                } else {
+                    System.out.println("Hasil Dari Uniform Cost Search Algorithm: " + ucsLadder.get(0));
+                    System.out.println("Jumlah node yang dikunjungi: " + ucsLadder.get(1));
+                }
+                break;
+            case 2:
+                List<Object> greedyLadder = GBFS.findWordLadderGreedy(startWord, endWord, wordList);
+                if (((List<?>) greedyLadder.get(0)).isEmpty()) {
+                    System.out.println("Sayang sekali, tidak ditemukan ladder dari " + startWord + " ke " + endWord + " :(. Mungkin salah satu atau kedua kata bukan dalam bahasa inggris ya, who knows? ㄟ( ▔, ▔ )ㄏ");
+                } else {
+                    System.out.println("Hasil dari Greedy Best First Search algorithm: " + greedyLadder.get(0));
+                    System.out.println("Jumlah node yang dikunjungi: " + greedyLadder.get(1));
+                }
+                break;
+            case 3:
+                List<Object> aStarLadder = ABintang.findWordLadderAStar(startWord, endWord, wordList);
+                if (((List<?>) aStarLadder.get(0)).isEmpty()) {
+                    System.out.println("Sayang sekali, tidak ditemukan ladder dari " + startWord + " ke " + endWord + " :(. Mungkin salah satu atau kedua kata bukan dalam bahasa inggris ya, who knows? ㄟ( ▔, ▔ )ㄏ");
+                } else {
+                    System.out.println("Hasil dari A* algorithm: " + aStarLadder.get(0));
+                    System.out.println("Jumlah node yang dikunjungi: " + aStarLadder.get(1));
+                }
+                break;
         }
+        long selesai = System.currentTimeMillis();
+        System.out.println("Waktu eksekusi: " + (selesai - mulai) + " ms");
 
+        // Close the scanner
         input.close();
+    }
+
+    // Method to check if a word contains only uppercase letters
+    private static boolean isValidWord(String word) {
+        for (int i = 0; i < word.length(); i++) {
+            if (!Character.isUpperCase(word.charAt(i))) {
+                System.out.println("Inputan tidak valid. Pastikan semua huruf besar.");
+                return false;
+            }
+        }
+        return true;
     }
 }

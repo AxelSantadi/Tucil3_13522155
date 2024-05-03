@@ -1,18 +1,13 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 
 public class ABintang {
     // Method to find word ladder using A* algorithm
-    public static List<String> findWordLadderAStar(String startWord, String endWord, Set<String> wordList) {
+    public static List<Object> findWordLadderAStar(String startWord, String endWord, Set<String> wordList) {
         // Implement A* algorithm here
         PriorityQueue<Node> queue = new PriorityQueue<>((n1, n2) -> Integer.compare(n1.getHeuristic() + n1.getCost(), n2.getHeuristic() + n2.getCost()));
         Set<String> visited = new HashSet<>();
         Map<String, String> parentMap = new HashMap<>();
+        int visitedNodes = 0; // Variable to store the number of visited nodes
 
         Node startNode = new Node(startWord, calculateHeuristic(startWord, endWord), 0);
         queue.offer(startNode);
@@ -21,6 +16,7 @@ public class ABintang {
         while (!queue.isEmpty()) {
             Node currentNode = queue.poll();
             String currentWord = currentNode.getWord();
+            visitedNodes++;
 
             if (currentWord.equals(endWord)) {
                 // Found the end word, construct the ladder
@@ -31,7 +27,7 @@ public class ABintang {
                     ladder.add(0, parent);
                     parent = parentMap.get(parent);
                 }
-                return ladder;
+                return Arrays.asList(ladder, visitedNodes); // Return ladder and number of visited nodes
             }
 
             // Generate all possible next words
@@ -52,7 +48,7 @@ public class ABintang {
         }
 
         // No ladder found
-        return new ArrayList<>();
+        return Arrays.asList(new ArrayList<>(), visitedNodes); // Return empty ladder and number of visited nodes
     }
 
     private static int calculateHeuristic(String word1, String word2) {
