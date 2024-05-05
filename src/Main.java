@@ -122,7 +122,7 @@ public class Main {
                 }
                 break;
             case 3:
-                List<Object> aStarLadder = ABintang.findWordLadderAStar(startWord, endWord, wordList);
+                List<Object> aStarLadder = ABintang.findWordLadderABintang(startWord, endWord, wordList);
                 if (((List<?>) aStarLadder.get(0)).isEmpty()) {
                     System.out.println("Sayang sekali, tidak ditemukan ladder dari " + startWord + " ke " + endWord + " :(");
                 } else {

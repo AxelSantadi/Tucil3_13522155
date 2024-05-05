@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class ABintang {
-    public static List<Object> findWordLadderAStar(String startWord, String endWord, Set<String> wordList) {
+    public static List<Object> findWordLadderABintang(String startWord, String endWord, Set<String> wordList) {
         PriorityQueue<Node> queue = new PriorityQueue<>((n1, n2) -> Integer.compare(n1.getHeuristic() + n1.getCost(), n2.getHeuristic() + n2.getCost()));
         Set<String> visited = new HashSet<>();
         Map<String, String> parentMap = new HashMap<>();
