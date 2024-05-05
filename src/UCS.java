@@ -1,13 +1,11 @@
 import java.util.*;
 
 public class UCS {
-    // Method to find word ladder using UCS algorithm
     public static List<Object> findWordLadderUCS(String startWord, String endWord, Set<String> wordList) {
-        // Implement UCS algorithm here
         PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(Node::getCost));
         Set<String> visited = new HashSet<>();
         Map<String, String> parentMap = new HashMap<>();
-        int visitedNodes = 0; // Variable to store the number of visited nodes
+        int visitedNodes = 0; // Variable buat menampung jumlah node yang dikunjungi
 
         Node startNode = new Node(startWord, 0);
         queue.offer(startNode);
@@ -19,7 +17,7 @@ public class UCS {
             visitedNodes++;
 
             if (currentWord.equals(endWord)) {
-                // Found the end word, construct the ladder
+                // kalo endWord udh ketemu, buat laddernya
                 List<String> ladder = new ArrayList<>();
                 ladder.add(endWord);
                 String parent = parentMap.get(endWord);
@@ -27,10 +25,10 @@ public class UCS {
                     ladder.add(0, parent);
                     parent = parentMap.get(parent);
                 }
-                return Arrays.asList(ladder, visitedNodes); // Return ladder and number of visited nodes
+                return Arrays.asList(ladder, visitedNodes); // Return ladder sama visited nodes
             }
 
-            // Generate all possible next words
+            // Generate semua kemungkinan kata selanjutnya
             for (int i = 0; i < currentWord.length(); i++) {
                 char[] wordArray = currentWord.toCharArray();
                 for (char c = 'A'; c <= 'Z'; c++) {
@@ -48,6 +46,6 @@ public class UCS {
         }
 
         // No ladder found
-        return Arrays.asList(new ArrayList<>(), visitedNodes); // Return empty ladder and number of visited nodes
+        return Arrays.asList(new ArrayList<>(), visitedNodes); // Return empty ladder sama visited nodes
     }
 }
