@@ -31,7 +31,11 @@ Welcome to Word Ladder, in this game you are tasked to change a word into anothe
 1. Pastikan pengguna sudah menginstall java agar program bisa berjalan
 2. Masuk ke dalam folder src
 3. Buka terminal (boleh cmd maupun wsl)
-4. Setelah itu ketik command ini:
+4. setelah terminal terbuka, masukkan ini ke dalam terminal (P.S hanya masukkan ini jika terminal baru dibuka, jika sudah pernah dimasukkan, maka lanjut ke nomor 5):
+```
+javac -d Class Main.java
+```
+5. Setelah itu ketik command ini:
 ```
 java -cp Class Main
 ```
