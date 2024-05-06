@@ -40,6 +40,7 @@ javac -d Class Main.java
 java -cp Class Main
 ```
 6. _Then prepare to be Amazed_ 😎
+(P.S jangan kebanyakan salah input ya, nanti programnya ngambek 😅)
 
 ## Creator
 Created by [@Axel Santadi](https://github.com/AxelSantadi) (Husband of Hoshimachi Suisei)
